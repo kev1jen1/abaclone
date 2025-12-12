@@ -117,6 +117,11 @@ public class JeuV2 {
         return nbBille;
     }
 
+    public static boolean estSurLePlateau(byte[][] tab, int ligne, int colonne) {
+        if (ligne < 1 || ligne > 9 || colonne < 1 || colonne > tab[ligne].length) return false;
+        return true;
+    }
+
     public static void Choix1(byte[][] tab, int joueur) {
         int ligne, colonne;
         do {
@@ -124,7 +129,7 @@ public class JeuV2 {
                     ligne = sc.nextInt(); // choix de la ligne du joueur
                     System.out.println("Colonne de la bille que vous voulez bouger : ");
                     colonne = sc.nextInt(); // choix de la colonne du joueur
-                } while ((ligne < 1 || ligne > 9 || colonne < 1 || colonne > tab[ligne].length) || tab[ligne-1][colonne-1] != joueur);
+                } while (!estSurLePlateau(tab, ligne, colonne) || tab[ligne-1][colonne-1] != joueur);
         switch (joueur) {
             case 1:
                 tab[ligne - 1][colonne - 1] = 3;
@@ -144,13 +149,13 @@ public class JeuV2 {
             l1 = sc.nextInt(); // choix de la ligne du joueur
             System.out.println("Colonne de la 1ere bille que vous voulez bouger : ");
             c1 = sc.nextInt(); // choix de la colonne du joueur
-        } while (l1 < 1 || l1 > 9 || c1 < 1 || c1 > tab[l1].length);
+        } while (!estSurLePlateau(tab, l1, c1) || tab[l1-1][c1-1] != joueur);
         do {
             System.out.println("Ligne de la 2e bille que vous voulez bouger : ");
             l2 = sc.nextInt(); // choix de la ligne du joueur
             System.out.println("Colonne de la 2e bille que vous voulez bouger : ");
             c2 = sc.nextInt(); // choix de la colonne du joueur
-        } while (l2 < 1 || l2 > 9 || c2 < 1 || c2 > tab[l1].length);
+        } while (!estSurLePlateau(tab, l1, c2) || tab[l2-1][c2-1] != joueur ||tab[l2-1][c2-1] == tab[l1-1][c1-1]);
 
         switch (joueur) {
             case 1:
