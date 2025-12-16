@@ -75,18 +75,27 @@ public class JeuV2 {
     public static void remplirTabPlateau(byte[][] plateau) {
         int index = 0;
         // remplir joueur 2
-        for (int ligne = 0; ligne < 3; ligne++) {
-            for (int colonne = ligne; colonne < (plateau[ligne].length - ligne); colonne++) {
-                plateau[ligne][colonne] = 2;
-            }
-        }
-        // remplir joueur 1
-        for (int ligne = plateau.length - 1; ligne >= 6; ligne--) {
 
-            for (int colonne = index; colonne < (plateau[ligne].length - index); colonne++) {
-                plateau[ligne][colonne] = 1;
-            }
-            index++;
+        for (int colonne = 0; colonne < plateau[0].length ; colonne++) {
+            plateau[0][colonne] = 2;
+        }
+        for (int colonne = 0; colonne < plateau[1].length ; colonne++) {
+            plateau[1][colonne] = 2;
+        }
+        for (int colonne = 2; colonne < (plateau[2].length - 2); colonne++) {
+            plateau[2][colonne] = 2;
+        }
+
+
+        // remplir joueur 1
+        for (int colonne = 0; colonne < plateau[8].length ; colonne++) {
+            plateau[8][colonne] = 1;
+        }
+        for (int colonne = 0; colonne < plateau[7].length ; colonne++) {
+            plateau[7][colonne] = 1;
+        }
+        for (int colonne = 2; colonne < (plateau[6].length - 2); colonne++) {
+            plateau[6][colonne] = 1;
         }
 
 
@@ -122,7 +131,7 @@ public class JeuV2 {
         return true;
     }
 
-    public static void Choix1(byte[][] tab, int joueur) {
+    public static void Choix1(byte[][] tab, int joueur, int[] coord) {
         int ligne, colonne;
         do {
                     System.out.println("Ligne de la bille que vous voulez bouger : ");
@@ -140,6 +149,8 @@ public class JeuV2 {
             default:
                 break;
         }
+        coord[0] = colonne -1;
+        coord[1] = ligne - 1;
     }
 
     public static void Choix2(byte[][] tab, int joueur) {
@@ -155,7 +166,7 @@ public class JeuV2 {
             l2 = sc.nextInt(); // choix de la ligne du joueur
             System.out.println("Colonne de la 2e bille que vous voulez bouger : ");
             c2 = sc.nextInt(); // choix de la colonne du joueur
-        } while (!estSurLePlateau(tab, l1, c2) || tab[l2-1][c2-1] != joueur ||tab[l2-1][c2-1] == tab[l1-1][c1-1]);
+        } while (!estSurLePlateau(tab, l2, c2) || tab[l2-1][c2-1] != joueur || (l2 == l1 && c2 == c1));
 
         switch (joueur) {
             case 1:
@@ -169,8 +180,45 @@ public class JeuV2 {
             default:
                 break;
         }
+
     }
 
+    public static void Choix3(byte[][] tab, int joueur) {
+        int l1, c1, l2, c2, l3, c3;
+        do {
+            System.out.println("Ligne de la 1ere bille que vous voulez bouger : ");
+            l1 = sc.nextInt(); // choix de la ligne du joueur
+            System.out.println("Colonne de la 1ere bille que vous voulez bouger : ");
+            c1 = sc.nextInt(); // choix de la colonne du joueur
+        } while (!estSurLePlateau(tab, l1, c1) || tab[l1-1][c1-1] != joueur);
+        do {
+            System.out.println("Ligne de la 2e bille que vous voulez bouger : ");
+            l2 = sc.nextInt(); // choix de la ligne du joueur
+            System.out.println("Colonne de la 2e bille que vous voulez bouger : ");
+            c2 = sc.nextInt(); // choix de la colonne du joueur
+        } while (!estSurLePlateau(tab, l1, c2) || tab[l2-1][c2-1] != joueur || (l2 == l1 && c2 == c1));
+        do {
+            System.out.println("Ligne de la 3e bille que vous voulez bouger : ");
+            l3 = sc.nextInt(); // choix de la ligne du joueur
+            System.out.println("Colonne de la 3e bille que vous voulez bouger : ");
+            c3 = sc.nextInt(); // choix de la colonne du joueur
+        } while (!estSurLePlateau(tab, l1, c3) || tab[l3-1][c3-1] != joueur || (l3 == l2 && c3 == c2));
+
+        switch (joueur) {
+            case 1:
+                tab[l1 - 1][c1 - 1] = 3;
+                tab[l2 - 1][c2 - 1] = 3;
+                tab[l3 - 1][c3 - 1] = 3;
+                break;
+            case 2:
+                tab[l1 - 1][c1 - 1] = 4;
+                tab[l2 - 1][c2 - 1] = 4;
+                tab[l3 - 1][c3 - 1] = 4;
+                break;
+            default:
+                break;
+        }
+    }
 
     public static int coordPourIndex(int position) {
         return position - 1;
@@ -223,55 +271,71 @@ public class JeuV2 {
         }
         System.out.println("");
     }
+    //public static void choixBouger()
+    public static boolean[] chercherPossiblite1Bille(byte[][] tab, int x, int y) {
 
-    public static boolean[] chercherPossiblité1Bille(byte[][] tab, int x, int y) {
         // [0] = 🡷, [1] = 🡰 , [2] = 🡴 , [3] = 🡵 , [4] = 🡲 , [5] = 🡶 .
-        boolean[] possibilitées = new boolean[5];
-        for (int index = 0; index < tab.length; index++) {
-            possibilitées[index] = false;
-        }
-        if (y < 8 && tab[y - 1][x] == 0) {
-            possibilitées[0] = true;
-        }
-        if (x > 0 && tab[y][x - 1] == 0) {
-            possibilitées[1] = true;
-        }
-        if (y > 0 && tab[y + 1][x] == 0) {
-            possibilitées[2] = true;
-        }
-        if (y > 0 && x + 1 <= tab[y].length && tab[y + 1][x + 1] == 0) {
-            possibilitées[3] = true;
-        }
-        if (x < 8 && tab[y][x + 1] == 0) {
-            possibilitées[4] = true;
-        }
-        if (y < 8 && x + 1 <= tab[y].length && tab[y - 1][x + 1] == 0) {
-            possibilitées[5] = true;
+        boolean[] possibilites = new boolean[6];
+
+        int maxY = tab.length;
+        int maxX = tab[0].length;
+
+        // Bas-gauche
+        if (y - 1 >= 0 && tab[y - 1][x] == 0) {
+            possibilites[0] = true;
         }
 
-        return possibilitées;
+        // Gauche
+        if (x - 1 >= 0 && tab[y][x - 1] == 0) {
+            possibilites[1] = true;
+        }
+
+        // Bas
+        if (y + 1 < maxY && tab[y + 1][x] == 0) {
+            possibilites[2] = true;
+        }
+
+        // Bas-droite
+        if (y + 1 < maxY && x + 1 < maxX && tab[y + 1][x + 1] == 0) {
+            possibilites[3] = true;
+        }
+
+        // Droite
+        if (x + 1 < maxX && tab[y][x + 1] == 0) {
+            possibilites[4] = true;
+        }
+
+        // Haut-droite
+        if (y - 1 >= 0 && x + 1 < maxX && tab[y - 1][x + 1] == 0) {
+            possibilites[5] = true;
+        }
+
+        return possibilites;
     }
+
+
+
     public static void PossibilitéTab(byte[][] tab, boolean[] choix, int x , int y) {
       for (int index = 0 ; index < choix.length; index++) {
           if (choix[index]) {
               switch (index) {
                   case 0:
-                      tab[y-1][y] = 5;
+                      tab[y-1][x] = 5;
                       break;
                   case 1:
                       tab[y][x-1] = 5;
                       break;
                   case 2:
-                      tab[y-1][y] = 5;
+                      tab[y+1][x] = 5;
                       break;
                   case 3:
-                      tab[y-1][y] = 5;
+                      tab[y+1][x+1] = 5;
                       break;
                   case 4:
-                      tab[y-1][y] = 5;
+                      tab[y+1][x] = 5;
                       break;
                   case 5:
-                      tab[y-1][y] = 5;
+                      tab[y+1][x-1] = 5;
                       break;
 
 
@@ -279,6 +343,12 @@ public class JeuV2 {
           }
       }
     }
+    public static void bouger1Bille(byte[][] tab, int x1 , int y1, int x2, int y2) {
+        tab[y1][x1] = tab[y2][x2];
+        tab[y2][x1] = 0;
+
+    }
+
 
 
 }
