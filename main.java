@@ -4,8 +4,7 @@ import java.util.Arrays;
 public class main {
     public static void main(String[] args){
 
-        JeuV2.plateau();
-        int[] coord;
+        int[] coord, target;
         coord = new int[2];
         byte[][] tab = JeuV2.creerTabPlateau();
         JeuV2.afficherPlateau(tab);
@@ -17,7 +16,9 @@ public class main {
                 JeuV2.Choix1(tab, 2, coord);
                 JeuV2.PossibilitéTab(tab, JeuV2.chercherPossiblite1Bille(tab,coord[0], coord[1]), coord[0], coord[1]);
                 JeuV2.afficherPlateau(tab);
-                //JeuV2.bouger1Bille(tab, x , y, int x2, int y2);
+                target = JeuV2.choisirBouger(tab, 2);
+                JeuV2.bouger1Bille(tab, coord, target);
+                JeuV2.afficherPlateau(tab);
                 break;
             case 2:
                 JeuV2.Choix2(tab, 2);

@@ -18,20 +18,7 @@ public class JeuV2 {
                 "                                                                        ");
     }
 
-    public static void plateau() {
-        System.out.println(
-                "    ┌─────────┐    \n" +
-                        "   ┌┘© © © © ©└┐   \n" +
-                        "  ┌┘□ © © © © □└┐  \n" +
-                        " ┌┘□ □ © © © □ □└┐ \n" +
-                        "┌┘□ □ □ □ □ □ □ □└┐\n" +
-                        "│□ □ □ □ □ □ □ □ □│\n" +
-                        "└┐□ □ □ □ □ □ □ □┌┘\n" +
-                        " └┐□ □ ✱ ✱ ✱ □ □┌┘ \n" +
-                        "  └┐□ ✱ ✱ ✱ ✱ □┌┘  \n" +
-                        "   └┐✱ ✱ ✱ ✱ ✱┌┘   \n" +
-                        "    └─────────┘    ");
-    }
+
 
     public static char caractereJ1() {
         return '✱';
@@ -153,6 +140,7 @@ public class JeuV2 {
         coord[1] = ligne - 1;
     }
 
+
     public static void Choix2(byte[][] tab, int joueur) {
         int l1, c1, l2, c2;
         do {
@@ -257,6 +245,7 @@ public class JeuV2 {
                         System.out.print(caractereChoix());
                         System.out.print(" ");
                         break;
+
                     case 5:
                         System.out.print(caracterePosible());
                         System.out.print(" ");
@@ -332,7 +321,7 @@ public class JeuV2 {
                       tab[y+1][x+1] = 5;
                       break;
                   case 4:
-                      tab[y+1][x] = 5;
+                      tab[y][x+1] = 5;
                       break;
                   case 5:
                       tab[y+1][x-1] = 5;
@@ -343,12 +332,52 @@ public class JeuV2 {
           }
       }
     }
-    public static void bouger1Bille(byte[][] tab, int x1 , int y1, int x2, int y2) {
-        tab[y1][x1] = tab[y2][x2];
-        tab[y2][x1] = 0;
+    public static void bouger1Bille(byte[][] tab, int[] posJoueur, int[] target) {
+        tab[target[1]][target[0]] = tab[posJoueur[1]][posJoueur[0]];
+        tab[posJoueur[1]][posJoueur[0]] = 0;
+        enleverDirection(tab);
+
+
 
     }
+    public static void enleverDirection(byte[][] tab) {
+        // enleve la prévisualisation des possiblitées
+        for (int ligne = 0; ligne < tab.length; ligne++) {
+            for (int colone = 0; colone < tab[ligne].length; colone++) {
+                if (tab[ligne][colone] == 5) {
+                    tab[ligne][colone] = 0;
+                }
+            }
+        }
+    }
 
+    public static int[] choisirBouger(byte[][] tab, int joueur) {
+        int l, c ;
+        int[] coord = new int[2];
+        do {
+            System.out.println("Ligne de la direction : ");
+            l = sc.nextInt(); // choix de la ligne du joueur
+            System.out.println("Colonne de la direction : ");
+            c = sc.nextInt(); // choix de la colonne du joueur
+        } while ((tab[c-1][l-1] == 3 && joueur == 1) || (tab[c-1][l-1] == 4 && joueur == 2) || !estSurLePlateau(tab, l, c) );
+
+        coord[0] = c;
+        coord[1] = l;
+        return coord;
+    }
+
+
+    public static int nbPossibilitées(boolean[] tab) {
+        // renvois le nombre de possibilitées d'un tableau d'actions
+        int nb = 0;
+        for (boolean possibilitées : tab) {
+            if (possibilitées) {
+                nb++;
+            }
+
+        }
+        return nb;
+    }
 
 
 }
