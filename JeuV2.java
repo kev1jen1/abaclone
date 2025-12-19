@@ -481,6 +481,62 @@ public class JeuV2 {
                 }
 
             case 1:
+                if (target[0] == 0 /* || target[0] == 0*/ ) {
+                    return true;
+                } else {
+                    return tab[target[1]][target[0] - 1] == 0;
+                }
+            case 2:
+                if (target[1] == 0 || target[0] == 0) {
+                    return true;
+                } else {
+                    return tab[target[1] - 1][target[0] - 1] == 0;
+                }
+            case 3:
+                if (target[1] == 0 || target[0] == tab[target[1] + 1].length - 1) {
+                    return true;
+                } else {
+                    return tab[target[1] - 1][target[0]] == 0;
+                }
+            case 4:
+                if (target[0] == tab[target[1] + 1].length - 1) {
+                    return true;
+                } else {
+                    return tab[target[1]][target[0] + 1] == 0;
+                }
+            case 5:
+                if (target[1] == 7 || target[0] == tab[target[1]].length - 1) {
+                    return true;
+                } else {
+                    return tab[target[1] + 1][target[0]+ 1] == 0;
+                }
+
+
+
+        }
+
+        return false;
+    }
+    public static boolean peutPousser3(byte[][] tab, int[] target, int index , int player) {
+        //vérifie si l'action pousser est possible pour 3 billes fortnite.
+        int enemie;
+        switch (player) {
+            case 1:
+                enemie = 2;
+                break;
+            case 2:
+                enemie = 1;
+            default:
+                break;
+        }
+        tab[target[1]][target[0]] = 4;
+
+        switch (index) {
+            case 0:
+
+                return tab[target[1] + 1][target[0] - 1] == 0;
+
+            case 1:
                 if (target[0] == 0 || target[0] == 0) {
                     return true;
                 } else {
@@ -517,6 +573,5 @@ public class JeuV2 {
 
         return false;
     }
-
 
 }
