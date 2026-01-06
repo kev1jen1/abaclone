@@ -39,7 +39,7 @@ public class JeuV2 {
     }
 
     public static char caracterePosible() {
-        return '▲';
+        return '★';
     }
 
 
@@ -154,13 +154,10 @@ public class JeuV2 {
         boolean saisieValide = false;
 
         do {
-            System.out.println("Combien de bille(s) voulez vous bouger (ou -1 pour retour) : ");
+            System.out.println("Combien de billes voulez vous bouger : ");
 
             if (sc.hasNextInt()) {
                 nbBille = sc.nextInt();
-                if (nbBille == -1) {
-                    return -1;
-                }
                 if (nbBille >= 1 && nbBille <= 3) {
                     saisieValide = true;
                 } else {
@@ -307,32 +304,32 @@ public class JeuV2 {
 
     public static int[][] Decalages(int y) {
         if (y < 4) {
-            
+
             return new int[][] {
                     { 1, 0 },   // 0: ↙
                     { 0, -1 },  // 1: ←
                     { -1, -1 }, // 2: ↖
                     { -1, 0 },  // 3: ↗
-                    { 0, 1 },   // 4: → 
-                    { 1, 1 }    // 5: ↘ 
+                    { 0, 1 },   // 4: →
+                    { 1, 1 }    // 5: ↘
             };
         } else if (y == 4) {
-        
+
             return new int[][] {
-                    { 1, -1 },  // 0: ↙ 
-                    { 0, -1 },  // 1: ← 
+                    { 1, -1 },  // 0: ↙
+                    { 0, -1 },  // 1: ←
                     { -1, -1 }, // 2: ↖
                     { -1, 0 },  // 3: ↗
-                    { 0, 1 },   // 4: → 
-                    { 1, 0 }    // 5: ↘ 
+                    { 0, 1 },   // 4: →
+                    { 1, 0 }    // 5: ↘
             };
         } else {
-        
+
             return new int[][] {
-                    { 1, -1 },  // 0: ↙ 
-                    { 0, -1 },  // 1: ← 
-                    { -1, 0 },  // 2: ↖ 
-                    { -1, 1 },  // 3: ↗ 
+                    { 1, -1 },  // 0: ↙
+                    { 0, -1 },  // 1: ←
+                    { -1, 0 },  // 2: ↖
+                    { -1, 1 },  // 3: ↗
                     { 0, 1 },   // 4: →
                     { 1, 0 }    // 5: ↘
             };
@@ -495,7 +492,7 @@ public class JeuV2 {
             }
         }
 
-        Teste direction
+        // Test direction
         for (int dir = 0; dir < 6; dir++) {
             if (estMouvementEnLigne(sel, nb, dir)) {
                 result[dir] = testerMouvementLigne(tab, sel, nb, dir, joueur);
@@ -711,7 +708,7 @@ public class JeuV2 {
     }
 
     public static boolean effectuerDeplacementLateral(byte[][] tab, int[][] sel, int nb, int dir) {
-       
+
         int valJoueur = 0;
         if (tab[sel[0][0]][sel[0][1]] == 3) {
             valJoueur = 1;
@@ -733,7 +730,7 @@ public class JeuV2 {
     }
 
     public static boolean effectuerDeplacementLigne(byte[][] tab, int[][] sel, int nb, int dir, int joueur) {
-       
+
         // 1. Trouver la tête
         int indexTete = 0;
         for (int i = 0; i < nb; i++) {
@@ -791,7 +788,7 @@ public class JeuV2 {
         }
     }
 
-    
+
 
     public static int compterBilles(byte[][] tab, int joueur) {
         int cpt = 0;
@@ -810,11 +807,11 @@ public class JeuV2 {
         int j2 = compterBilles(tab, 2);
 
         if (j1 <= 8) {
-            System.out.println("VICTOIRE DU JOUEUR 2 !");
+            System.out.println("VICTOIRE DU JOUEUR 2 ! GG !");
             return true;
         }
         if (j2 <= 8) {
-            System.out.println("VICTOIRE DU JOUEUR 1 !");
+            System.out.println("VICTOIRE DU JOUEUR 1 ! GG !");
             return true;
         }
         return false;
