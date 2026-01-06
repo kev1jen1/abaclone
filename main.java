@@ -59,7 +59,7 @@ public class main {
 
              
                 if (nbBilles == 1) {
-                    // Pour 1 bille, on cherche sa position pour calculer les voisins
+                    
                     int px = 0;
                     int py = 0;
                     for (int y = 0; y < plateau.length; y++) {
@@ -102,11 +102,10 @@ public class main {
 
               
                 if (mouvementEffectue) {
-                    // Nettoyage
+                    
                     JeuV2.finChoix(plateau);
                     JeuV2.enleverDirection(plateau);
 
-                    // Changement de joueur
                     if (joueurActuel == 1) {
                         joueurActuel = 2;
                     } else {
@@ -115,7 +114,7 @@ public class main {
                     // Retour au début
                     etape = 0;
                 } else {
-                    // Annulation (Retour en arrière)
+                 
                     System.out.println("Retour à la sélection...");
                     JeuV2.finChoix(plateau);
                     JeuV2.enleverDirection(plateau);
