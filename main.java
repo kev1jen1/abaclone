@@ -8,7 +8,7 @@ public class main {
         boolean partieEnCours = true;
         int joueurActuel = 1;
 
-        
+
         int etape = 0;
         int nbBilles = 0;
 
@@ -17,7 +17,6 @@ public class main {
             if (etape == 0) {
                 JeuV2.afficherPlateau(plateau);
 
-                
                 if (JeuV2.verifierVictoire(plateau)) {
                     partieEnCours = false;
                     break;
@@ -27,16 +26,16 @@ public class main {
                 nbBilles = JeuV2.ChoixNombreBille(plateau, joueurActuel);
 
                 etape = 1;
-                
+
             }
 
-            
+
             else if (etape == 1) {
                 boolean selectionOK = false;
 
                 if (nbBilles == 1) {
-                    int[] dummy = new int[2];
-                    selectionOK = JeuV2.Choix1(plateau, joueurActuel, dummy);
+                    int[] billePos = new int[2];
+                    selectionOK = JeuV2.Choix1(plateau, joueurActuel, billePos);
                 } else if (nbBilles == 2) {
                     selectionOK = JeuV2.Choix2(plateau, joueurActuel);
                 } else if (nbBilles == 3) {
@@ -44,7 +43,7 @@ public class main {
                 }
 
                 if (selectionOK) {
-                  
+
                     JeuV2.afficherPlateau(plateau);
                     etape = 2;
                 } else {
@@ -53,13 +52,13 @@ public class main {
                 }
             }
 
-            
+
             else if (etape == 2) {
                 boolean[] possibles;
 
-             
+
                 if (nbBilles == 1) {
-                    
+
                     int px = 0;
                     int py = 0;
                     for (int y = 0; y < plateau.length; y++) {
@@ -71,18 +70,19 @@ public class main {
                         }
                     }
                     possibles = JeuV2.chercherPossiblite1Bille(plateau, joueurActuel, px, py);
-                   
+
                     JeuV2.PossibilitéTab(plateau, possibles, px, py);
                 } else {
-                    
+
                     possibles = JeuV2.chercherPossibilitesGroupe(plateau, joueurActuel);
-                    
+
                     JeuV2.marquerPossibilitesGroupe(plateau, possibles);
                 }
 
+
                 JeuV2.afficherPlateau(plateau);
 
-   
+
                 boolean mouvementEffectue;
 
                 if (nbBilles == 1) {
@@ -100,21 +100,22 @@ public class main {
                     mouvementEffectue = JeuV2.bougerGroupe(plateau, joueurActuel, possibles);
                 }
 
-              
+
                 if (mouvementEffectue) {
-                    
+
                     JeuV2.finChoix(plateau);
                     JeuV2.enleverDirection(plateau);
+
 
                     if (joueurActuel == 1) {
                         joueurActuel = 2;
                     } else {
                         joueurActuel = 1;
                     }
-                    // Retour au début
+
                     etape = 0;
                 } else {
-                 
+
                     System.out.println("Retour à la sélection...");
                     JeuV2.finChoix(plateau);
                     JeuV2.enleverDirection(plateau);
