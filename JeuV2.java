@@ -42,7 +42,7 @@ public class JeuV2 {
         return '▲';
     }
 
-    // --- GESTION PLATEAU ---
+
 
     public static byte[][] creerTabPlateau() {
         byte[] longueur = { 5, 6, 7, 8, 9, 8, 7, 6, 5 };
@@ -148,7 +148,6 @@ public class JeuV2 {
         }
     }
 
-    // --- FONCTIONS DE SAISIE ---
 
     public static int ChoixNombreBille(byte[][] tab, int joueur) {
         int nbBille = 0;
@@ -305,38 +304,37 @@ public class JeuV2 {
         return true;
     }
 
-    // --- OUTILS GEOMETRIQUES ---
 
     public static int[][] Decalages(int y) {
         if (y < 4) {
-            // PARTIE HAUTE (Lignes grandissantes)
+            
             return new int[][] {
-                    { 1, 0 },   // 0: ↙ (Sud-Ouest)
-                    { 0, -1 },  // 1: ← (Ouest)
-                    { -1, -1 }, // 2: ↖ (Nord-Ouest)
-                    { -1, 0 },  // 3: ↗ (Nord-Est)
-                    { 0, 1 },   // 4: → (Est)
-                    { 1, 1 }    // 5: ↘ (Sud-Est)
+                    { 1, 0 },   // 0: ↙
+                    { 0, -1 },  // 1: ←
+                    { -1, -1 }, // 2: ↖
+                    { -1, 0 },  // 3: ↗
+                    { 0, 1 },   // 4: → 
+                    { 1, 1 }    // 5: ↘ 
             };
         } else if (y == 4) {
-            // LIGNE DU MILIEU (Pivot)
+        
             return new int[][] {
-                    { 1, -1 },  // 0: ↙ (Sud-Ouest)
-                    { 0, -1 },  // 1: ← (Ouest)
-                    { -1, -1 }, // 2: ↖ (Nord-Ouest)
-                    { -1, 0 },  // 3: ↗ (Nord-Est)
-                    { 0, 1 },   // 4: → (Est)
-                    { 1, 0 }    // 5: ↘ (Sud-Est)
+                    { 1, -1 },  // 0: ↙ 
+                    { 0, -1 },  // 1: ← 
+                    { -1, -1 }, // 2: ↖
+                    { -1, 0 },  // 3: ↗
+                    { 0, 1 },   // 4: → 
+                    { 1, 0 }    // 5: ↘ 
             };
         } else {
-            // PARTIE BASSE (Lignes décroissantes)
+        
             return new int[][] {
-                    { 1, -1 },  // 0: ↙ (Sud-Ouest)
-                    { 0, -1 },  // 1: ← (Ouest)
-                    { -1, 0 },  // 2: ↖ (Nord-Ouest)
-                    { -1, 1 },  // 3: ↗ (Nord-Est)
-                    { 0, 1 },   // 4: → (Est)
-                    { 1, 0 }    // 5: ↘ (Sud-Est)
+                    { 1, -1 },  // 0: ↙ 
+                    { 0, -1 },  // 1: ← 
+                    { -1, 0 },  // 2: ↖ 
+                    { -1, 1 },  // 3: ↗ 
+                    { 0, 1 },   // 4: →
+                    { 1, 0 }    // 5: ↘
             };
         }
     }
@@ -383,7 +381,7 @@ public class JeuV2 {
         return (dir + 3) % 6;
     }
 
-    // --- LOGIQUE DE MOUVEMENT (1 Bille) ---
+
 
     public static boolean[] chercherPossiblite1Bille(byte[][] tab, int joueur, int x, int y) {
         boolean[] possibilites = new boolean[6];
@@ -479,12 +477,12 @@ public class JeuV2 {
         return true;
     }
 
-    // --- LOGIQUE DE MOUVEMENT (Groupe) ET PRÉVISUALISATION ---
+
 
     public static boolean[] chercherPossibilitesGroupe(byte[][] tab, int joueur) {
         boolean[] result = new boolean[6];
 
-        // 1. Récupérer la sélection
+
         int[][] sel = new int[3][2];
         int nb = 0;
         for (int y = 0; y < tab.length; y++) {
@@ -497,7 +495,7 @@ public class JeuV2 {
             }
         }
 
-        // 2. Tester chaque direction
+        Teste direction
         for (int dir = 0; dir < 6; dir++) {
             if (estMouvementEnLigne(sel, nb, dir)) {
                 result[dir] = testerMouvementLigne(tab, sel, nb, dir, joueur);
@@ -713,8 +711,7 @@ public class JeuV2 {
     }
 
     public static boolean effectuerDeplacementLateral(byte[][] tab, int[][] sel, int nb, int dir) {
-        // Validation déjà faite par testerMouvementLateral
-        // On déplace
+       
         int valJoueur = 0;
         if (tab[sel[0][0]][sel[0][1]] == 3) {
             valJoueur = 1;
@@ -736,9 +733,7 @@ public class JeuV2 {
     }
 
     public static boolean effectuerDeplacementLigne(byte[][] tab, int[][] sel, int nb, int dir, int joueur) {
-        // La validation principale est déjà faite par testerMouvementLigne
-        // On doit juste gérer la poussée si elle existe
-
+       
         // 1. Trouver la tête
         int indexTete = 0;
         for (int i = 0; i < nb; i++) {
@@ -796,7 +791,7 @@ public class JeuV2 {
         }
     }
 
-    // --- VICTOIRE ---
+    
 
     public static int compterBilles(byte[][] tab, int joueur) {
         int cpt = 0;
