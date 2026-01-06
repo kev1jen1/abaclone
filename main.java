@@ -26,11 +26,8 @@ public class main {
                 System.out.println("--- Tour du Joueur " + joueurActuel + " ---");
                 nbBilles = JeuV2.ChoixNombreBille(plateau, joueurActuel);
 
-                if (nbBilles == -1) {
-                    System.out.println("Impossible de reculer plus.");
-                } else {
-                    etape = 1;
-                }
+                etape = 1;
+                
             }
 
             
