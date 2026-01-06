@@ -8,13 +8,12 @@ public class main {
         boolean partieEnCours = true;
         int joueurActuel = 1;
 
-        // Gestion des étapes : 0 = Nb Billes, 1 = Sélection, 2 = Mouvement
+        
         int etape = 0;
         int nbBilles = 0;
 
         while (partieEnCours) {
 
-            // --- ETAPE 0 : CHOIX DU NOMBRE DE BILLES ---
             if (etape == 0) {
                 JeuV2.afficherPlateau(plateau);
 
@@ -34,7 +33,7 @@ public class main {
                 }
             }
 
-            // --- ETAPE 1 : SÉLECTION DES BILLES ---
+            
             else if (etape == 1) {
                 boolean selectionOK = false;
 
@@ -57,7 +56,7 @@ public class main {
                 }
             }
 
-            // --- ETAPE 2 : PRÉVISUALISATION ET MOUVEMENT ---
+            
             else if (etape == 2) {
                 boolean[] possibles;
 
