@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class JeuV2 {
     public static Scanner sc = new Scanner(System.in);
 
-    // --- AFFICHAGE ET OUTILS ---
+
 
     public static void titre() {
         System.out.println(" _______  ______   _______  _______  _        _______  _        _______ \n" +
