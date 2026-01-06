@@ -17,7 +17,7 @@ public class main {
             if (etape == 0) {
                 JeuV2.afficherPlateau(plateau);
 
-                // Vérifier la victoire avant de commencer le tour
+                
                 if (JeuV2.verifierVictoire(plateau)) {
                     partieEnCours = false;
                     break;
@@ -44,7 +44,7 @@ public class main {
                 }
 
                 if (selectionOK) {
-                    // On affiche le plateau avec la sélection finale (X)
+                  
                     JeuV2.afficherPlateau(plateau);
                     etape = 2;
                 } else {
@@ -57,7 +57,7 @@ public class main {
             else if (etape == 2) {
                 boolean[] possibles;
 
-                // 1. Calcul des possibilités (Simulation)
+             
                 if (nbBilles == 1) {
                     // Pour 1 bille, on cherche sa position pour calculer les voisins
                     int px = 0;
@@ -71,19 +71,18 @@ public class main {
                         }
                     }
                     possibles = JeuV2.chercherPossiblite1Bille(plateau, joueurActuel, px, py);
-                    // Marquage visuel (▲)
+                   
                     JeuV2.PossibilitéTab(plateau, possibles, px, py);
                 } else {
-                    // Pour groupe : calcul complexe (Sumito, Latéral)
+                    
                     possibles = JeuV2.chercherPossibilitesGroupe(plateau, joueurActuel);
-                    // Marquage visuel (▲)
+                    
                     JeuV2.marquerPossibilitesGroupe(plateau, possibles);
                 }
 
-                // 2. Affichage des possibilités sur le plateau
                 JeuV2.afficherPlateau(plateau);
 
-                // 3. Demande de mouvement
+   
                 boolean mouvementEffectue;
 
                 if (nbBilles == 1) {
@@ -101,7 +100,7 @@ public class main {
                     mouvementEffectue = JeuV2.bougerGroupe(plateau, joueurActuel, possibles);
                 }
 
-                // 4. Traitement du résultat
+              
                 if (mouvementEffectue) {
                     // Nettoyage
                     JeuV2.finChoix(plateau);
