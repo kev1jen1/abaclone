@@ -801,6 +801,15 @@ public class JeuV2 {
         }
         return cpt;
     }
+    public static int score(byte[][] tab, int joueur) {
+        int nb;
+        if (joueur == 1) {
+            return 14 - compterBilles(tab, 2) ;
+        }
+        else {
+            return 14 - compterBilles(tab, 1) ;
+        }
+    }
 
     public static boolean verifierVictoire(byte[][] tab) {
         int j1 = compterBilles(tab, 1);
