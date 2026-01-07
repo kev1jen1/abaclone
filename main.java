@@ -2,8 +2,19 @@ public class main {
     public static void main(String[] args) {
         // Initialisation du jeu
         JeuV2.titre();
-        byte[][] plateau = JeuV2.creerTabPlateau();
-        JeuV2.remplirTabPlateau(plateau);
+        //byte[][] plateau = JeuV2.creerTabPlateau();
+        byte[][]plateau = {
+                {2, 0, 2, 2, 2},
+                {1, 2, 2, 1, 2, 2},
+                {1, 0, 2, 1, 0, 2, 2},
+                {1, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}
+        };
+        //JeuV2.remplirTabPlateau(plateau);
 
         boolean partieEnCours = true;
         int joueurActuel = 1;
@@ -16,6 +27,8 @@ public class main {
 
             if (etape == 0) {
                 JeuV2.afficherPlateau(plateau);
+                System.out.println("--- score Joueur  1 : " + JeuV2.score(plateau, 1));
+                System.out.println("--- score Joueur  2 : " + JeuV2.score(plateau, 2));
 
                 if (JeuV2.verifierVictoire(plateau)) {
                     partieEnCours = false;
