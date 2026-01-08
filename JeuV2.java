@@ -522,77 +522,83 @@ public class JeuV2 {
         return true;
     }
 
-    public static boolean testerMouvementLigne(byte[][] tab, int[][] sel, int nb, int dir, int joueur) {
-        // Trouver la tête
-        int indexTete = 0;
-        for (int i = 0; i < nb; i++) {
-            int y = sel[i][0];
-            int x = sel[i][1];
-            int[][] d = Decalages(y);
-            int ny = y + d[dir][0];
-            int nx = x + d[dir][1];
-
-            boolean caseDevantEstAmie = false;
-            for (int j = 0; j < nb; j++) {
-                if (sel[j][0] == ny && sel[j][1] == nx) {
-                    caseDevantEstAmie = true;
-                }
-            }
-            if (!caseDevantEstAmie) {
-                indexTete = i;
-                break;
-            }
-        }
-
-        int y = sel[indexTete][0];
-        int x = sel[indexTete][1];
+   public static boolean testerMouvementLigne(byte[][] tab, int[][] sel, int nb, int dir, int joueur) {
+    
+    int indexTete = 0;
+    for (int i = 0; i < nb; i++) {
+        int y = sel[i][0];
+        int x = sel[i][1];
         int[][] d = Decalages(y);
         int ny = y + d[dir][0];
         int nx = x + d[dir][1];
 
-        if (!estSurLePlateau(tab, ny, nx)) {
-            return false;
-        }
-
-        // Libre
-        if (tab[ny][nx] == 0 || tab[ny][nx] == 5) {
-            return true;
-        }
-
-        // Ami
-        if (tab[ny][nx] == joueur || tab[ny][nx] == (joueur + 2)) {
-            return false;
-        }
-
-        // Ennemi (Sumito Check)
-        int ennemi = (joueur == 1) ? 2 : 1;
-        if (tab[ny][nx] == ennemi) {
-            int nbEnnemis = 0;
-            int cy = ny;
-            int cx = nx;
-
-            while (estSurLePlateau(tab, cy, cx) && tab[cy][cx] == ennemi) {
-                nbEnnemis = nbEnnemis + 1;
-                int[][] dc = Decalages(cy);
-                cy = cy + dc[dir][0];
-                cx = cx + dc[dir][1];
+        boolean caseDevantEstAmie = false;
+        for (int j = 0; j < nb; j++) {
+            if (sel[j][0] == ny && sel[j][1] == nx) {
+                caseDevantEstAmie = true;
             }
-
-            if (nb <= nbEnnemis) {
-                return false;
-            }
-
-            // Derrière les ennemis
-            if (estSurLePlateau(tab, cy, cx)) {
-                if (tab[cy][cx] != 0 && tab[cy][cx] != 5) {
-                    return false; // Bloqué
-                }
-            }
-            return true;
         }
+        if (!caseDevantEstAmie) {
+            indexTete = i;
+            break;
+        }
+    }
 
+    int y = sel[indexTete][0];
+    int x = sel[indexTete][1];
+    int[][] d = Decalages(y);
+    int ny = y + d[dir][0];
+    int nx = x + d[dir][1];
+
+    if (!estSurLePlateau(tab, ny, nx)) {
         return false;
     }
+
+    
+    if (tab[ny][nx] == 0 || tab[ny][nx] == 5) {
+        return true;
+    }
+
+    
+    if (tab[ny][nx] == joueur || tab[ny][nx] == (joueur + 2)) {
+        return false;
+    }
+
+    
+    int ennemi;
+    if (joueur == 1) {
+        ennemi = 2;
+    } else {
+        ennemi = 1;
+    }
+
+    if (tab[ny][nx] == ennemi) {
+        int nbEnnemis = 0;
+        int cy = ny;
+        int cx = nx;
+
+        while (estSurLePlateau(tab, cy, cx) && tab[cy][cx] == ennemi) {
+            nbEnnemis = nbEnnemis + 1;
+            int[][] dc = Decalages(cy);
+            cy = cy + dc[dir][0];
+            cx = cx + dc[dir][1];
+        }
+
+        if (nb <= nbEnnemis) {
+            return false;
+        }
+
+        
+        if (estSurLePlateau(tab, cy, cx)) {
+            if (tab[cy][cx] != 0 && tab[cy][cx] != 5) {
+                return false; // Bloqué
+            }
+        }
+        return true;
+    }
+
+    return false;
+}
 
     public static void marquerPossibilitesGroupe(byte[][] tab, boolean[] possibilites) {
         int[][] sel = new int[3][2];
@@ -610,7 +616,7 @@ public class JeuV2 {
         for (int dir = 0; dir < 6; dir++) {
             if (possibilites[dir]) {
                 if (estMouvementEnLigne(sel, nb, dir)) {
-                    // On marque devant la tête
+                    
                     int indexTete = 0;
                     for (int i = 0; i < nb; i++) {
                         int y = sel[i][0];
@@ -620,7 +626,9 @@ public class JeuV2 {
                         int nx = x + d[dir][1];
                         boolean ami = false;
                         for(int j=0; j<nb; j++) if(sel[j][0]==ny && sel[j][1]==nx) ami=true;
-                        if(!ami) { indexTete=i; break; }
+                        if(!ami) { 
+                            indexTete=i;
+                            break; }
                     }
                     int y = sel[indexTete][0];
                     int x = sel[indexTete][1];
